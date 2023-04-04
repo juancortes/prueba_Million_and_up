@@ -1,1 +1,35 @@
-<p>products works!</p>
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{title}}</mat-card-title>
+      <mat-card-subtitle><strong>Category: </strong>{{category}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-lg-image src="{{image}}" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <p>
+        {{description}}
+      </p>
+      <p><strong>Price:</strong> {{ price }}</p>
+      <p><strong>cantidad:</strong> {{ cantidad }}</p>
+      <p><strong>rate:</strong> {{ rate }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <section>
+            <div class="example-button-row">
+                <button mat-raised-button class="btn btn-primary">Buy</button>
+            </div>
+        </section>
+    </mat-card-actions>
+</mat-card>
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+        <mat-label>amount</mat-label>
+        <input type="number" min="0" 
+                name="amount"
+                [ngClass]="{'is-invalid': amount < 0}"
+                (change)="onChange($event)"
+                matInput placeholder="amount"
+                
+                value="{{amount}}"/>
+    </mat-form-field>
+</form>

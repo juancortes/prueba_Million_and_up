@@ -17,6 +17,7 @@ import { VentasComponent } from './ventas/ventas.component';
 import { MaterialModule } from '../material-module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductsComponent } from './products/products.component';
+import { DialogCantidadComponent } from './dialogs/dialog-cantidad/dialog-cantidad.component';
 
 
 
@@ -29,7 +30,8 @@ import { ProductsComponent } from './products/products.component';
     AccountSettingsComponent,
     PromesasComponent,
     VentasComponent,
-    ProductsComponent
+    ProductsComponent,
+    DialogCantidadComponent
   ], 
   exports: [
     DashboardComponent,

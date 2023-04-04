@@ -9,7 +9,7 @@
         class="mat-elevation-z8">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let row"><a [routerLink]="['../products']" [queryParams]="{ id: row.id}">{{ row.id }}</a></td>
+            <td mat-cell *matCellDef="let row"><a [routerLink]="['../products',row.id]">{{ row.id }}</a></td>
         </ng-container>  
 
         <ng-container matColumnDef="image">

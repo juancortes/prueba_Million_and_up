@@ -12,4 +12,9 @@ export class TableService {
   getData() {
     return this.http.get(this.baseUrl);
   }
+
+  getDataById(id:string) {
+    let url = this.baseUrl+"/"+id;
+    return this.http.get(url, {responseType: 'json'});
+  }
 }
