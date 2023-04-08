@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
@@ -18,6 +17,9 @@ import { MaterialModule } from '../material-module';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductsComponent } from './products/products.component';
 import { DialogCantidadComponent } from './dialogs/dialog-cantidad/dialog-cantidad.component';
+import { ShoppingCardsComponent } from './shopping-cards/shopping-cards.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DialogConfirmComponent } from './dialogs/dialog-confirm/dialog-confirm.component';
 
 
 
@@ -31,7 +33,9 @@ import { DialogCantidadComponent } from './dialogs/dialog-cantidad/dialog-cantid
     PromesasComponent,
     VentasComponent,
     ProductsComponent,
-    DialogCantidadComponent
+    DialogCantidadComponent,
+    ShoppingCardsComponent,
+    DialogConfirmComponent
   ], 
   exports: [
     DashboardComponent,
@@ -49,7 +53,8 @@ import { DialogCantidadComponent } from './dialogs/dialog-cantidad/dialog-cantid
     ComponentsModule,
     MaterialModule,
     HttpClientModule,
-    
+    ReactiveFormsModule,
+    FontAwesomeModule
   ]
 })
 export class PagesModule { }

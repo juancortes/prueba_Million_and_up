@@ -12,7 +12,8 @@ export class SidebarService {
       icono: 'mdi mdi-gauge',
       submenu: [
         {titulo: 'Main', url:'/' },
-        {titulo: 'Ventas', url:'ventas' },
+        {titulo: 'Sales', url:'sales' },
+        {titulo: 'Shopping-cards', url:'shoping-cards' },
       ]
     }
   ];

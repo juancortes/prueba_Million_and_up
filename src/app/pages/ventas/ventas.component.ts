@@ -32,7 +32,7 @@ export class VentasComponent {
   posts:any;
 
   constructor(private tableService: TableService){
-    this.tableService.getData().subscribe(data => {
+    this.tableService.getDataProducts().subscribe(data => {
       console.log(data);
       this.posts = data;
       this.dataSource = new MatTableDataSource(this.posts);
