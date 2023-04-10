@@ -49,7 +49,21 @@ export class TableService {
     return this.http.post(this.baseURL + 'shopping_carts', body,{'headers':headers})
   }
 
+  updateDataShoppingCards(value:string,products_id:string) {
+    const headers = { 'content-type': 'application/json'}  
+    const body=JSON.stringify(value);
+    console.log(body)
+    return this.http.put(this.baseURL + 'shopping_carts/'+products_id, body,{'headers':headers})
+  }
+
   deleteShoppingCard(id:string):Observable<any>{
     return this.http.delete(this.baseURL + 'shopping_carts/' + id)
+  }
+
+  saveSale():Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    const body = JSON.stringify([]);
+    console.log(body)
+    return this.http.post(this.baseURL + 'sales', body,{'headers':headers})
   }
 }

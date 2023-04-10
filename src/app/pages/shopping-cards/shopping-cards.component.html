@@ -27,23 +27,27 @@
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                   <button class="btn btn-link px-2"
-                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                    onclick="this.parentNode.querySelector('input[type=number]').stepDown(); this.parentNode.querySelector('input[type=number]').dispatchEvent(new Event('change'))">
                     <fa-icon [icon]="faMinus"></fa-icon>
                   </button>
   
-                  <input id="form1" min="0" name="quantity" value="{{item.sum}}" type="number"
-                    class="form-control form-control-sm" />
+                  <input id="form1" min="0" name="quantity" id="quantity_{{item.products_id}}" value="{{item.sum}}" (change)="onCountChange($event,item.products_id, item.price)" type="number"
+                    class="form-control form-control-sm" style="width: 63px;"/>
   
                   <button class="btn btn-link px-2"
-                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                    onclick="this.parentNode.querySelector('input[type=number]').stepUp(); this.parentNode.querySelector('input[type=number]').dispatchEvent(new Event('change'))">
                     <fa-icon [icon]="faPlus"></fa-icon>
                   </button>
                 </div>
                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                  <h5 class="mb-0">${{ item.price }}</h5>
+                  <h5 class="mb-0">Unit price: ${{ item.price }}</h5>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                  <h5 class="mb-0" *ngIf="total == 0">Total price: $ {{ item.sutotal_m * item.price }} </h5>
+                  <h5 class="mb-0" *ngIf="total > 0">Total price: $ <div id="total_{{item.products_id}}"></div> </h5>
                 </div>
                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                  <button mat-raised-button type="button" class="text-danger" (click)="openDialog('0ms', '0ms')"><fa-icon [icon]="faTrash"></fa-icon></button>
+                  <button mat-raised-button type="button" class="text-danger" (click)="openDialogConfirm('0ms', '0ms', item.products_id)"><fa-icon [icon]="faTrash"></fa-icon></button>
                 </div>
               </div>
             </div>
@@ -51,7 +55,7 @@
   
           <div class="card">
             <div class="card-body">
-              <button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
+              <button type="button" class="btn btn-warning btn-block btn-lg" (click)="buy()">Proceed to Pay</button>
             </div>
           </div>
   

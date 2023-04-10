@@ -19,11 +19,11 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-ventas',
-  templateUrl: './ventas.component.html',
-  styleUrls: [ './ventas.component.css'  ]
+  selector: 'app-sales',
+  templateUrl: './sales.component.html',
+  styleUrls: [ './sales.component.css'  ]
 })
-export class VentasComponent {
+export class SalesComponent {
   title = 'data-table';
   displayedColumn: string[] = ['id','image','category','title','description','price'];
   dataSource!: MatTableDataSource<UserData>;

@@ -14,7 +14,6 @@ import { ShoppingCard } from 'src/app/model/shopping-card';
 })
 export class ProductsComponent implements OnInit {
   displayedColumn: string[] = ['id','image','category','title','description','price'];
-  @Output() valueAmount:EventEmitter<number> = new EventEmitter;
   image:string = "";
   title:string = "";
   description:string = "";
@@ -89,21 +88,26 @@ export class ProductsComponent implements OnInit {
         });
       }
       else{
-        let products_id:number = parseInt((this.activatedRoute.snapshot.paramMap.get("id")|| "")) ;
-        let count:number = event.target.value;
-        let price:number = parseFloat(this.price);
-        this.shoppingCard.products_id = products_id;
-        this.shoppingCard.count = count;
-        this.shoppingCard.price = price;
-        this.tableService.saveShoppingCard(this.shoppingCard)
-                        .subscribe(data => {
-                          this.calculateCount();
-                          setTimeout(() => {
-                            this.refreshProducts()
-                          }, 100);
-                        })
+        this.amount = event.target.value;
       }
     }
+  }
+
+  addShoppingCart() {
+    let products_id:number = parseInt((this.activatedRoute.snapshot.paramMap.get("id")|| "")) ;
+    let count:number = this.amount;
+    let price:number = parseFloat(this.price);
+    this.shoppingCard.products_id = products_id;
+    this.shoppingCard.count = count;
+    this.shoppingCard.price = price;
+    this.tableService.saveShoppingCard(this.shoppingCard)
+                    .subscribe(data => {
+                      this.calculateCount();
+                      setTimeout(() => {
+                        this.refreshProducts()
+                      }, 100);
+                      
+                    })
   }
 
 }

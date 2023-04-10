@@ -10,13 +10,13 @@
         {{description}}
       </p>
       <p><strong>Price:</strong> ${{ price }}</p>
-      <p><strong>cantidad:</strong> {{ cantidad }}</p>
-      <p><strong>rate:</strong> {{ rate }}</p>
+      <p><strong>Units available:</strong> {{ cantidad }}</p>
+      <p><strong>Rate:</strong> {{ rate }}</p>
     </mat-card-content>
     <mat-card-actions>
         <form class="example-form" [formGroup]="form">
             <mat-form-field class="example-full-width">
-                <mat-label>amount</mat-label>
+                <mat-label>Amount</mat-label>
                 <input type="number" min="0" 
                         name="amount"
                         [ngClass]="{'is-invalid': amount < 0}"
@@ -29,7 +29,7 @@
         <section>
             <div class="example-button-row">
                 <button mat-raised-button class="btn btn-primary" 
-                [disabled]="!form.valid">Add shopping cart</button>
+                [disabled]="!form.valid" (click)="addShoppingCart()">Add shopping cart</button>
             </div>
         </section>
     </mat-card-actions>
