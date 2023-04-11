@@ -68,9 +68,15 @@ export class ProductsComponent implements OnInit {
     this.tableService.getDataShoppingCardByProducts_id(id).subscribe((data:any) => {
       for (let dato of data) {
         this.cant += dato.sum;
-        console.log
       }
     });
+
+    this.tableService.getDataCountSaleByProducts_id(id).subscribe((data:any) => {
+      for (let dato of data) {
+        this.cant += dato.sum;
+      }
+    });
+
     return this.cant;
     
   }

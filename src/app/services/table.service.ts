@@ -60,6 +60,11 @@ export class TableService {
     return this.http.delete(this.baseURL + 'shopping_carts/' + id)
   }
 
+  getDataCountSaleByProducts_id(products_id:string) {
+    let url = this.baseURL+"sales"+"/getCountSaleByProductsId/"+products_id;
+    return this.http.get(url, {responseType: 'json'});
+  }
+
   saveSale():Observable<any>{
     const headers = { 'content-type': 'application/json'}
     const body = JSON.stringify([]);
