@@ -32,7 +32,7 @@
                   </button>
   
                   <input id="form1" min="0" name="quantity" id="quantity_{{item.products_id}}" value="{{item.sum}}" (change)="onCountChange($event,item.products_id, item.price)" type="number"
-                    class="form-control form-control-sm" style="width: 63px;"/>
+                    class="form-control form-control-sm" style="width: 53px;"/>
   
                   <button class="btn btn-link px-2"
                     onclick="this.parentNode.querySelector('input[type=number]').stepUp(); this.parentNode.querySelector('input[type=number]').dispatchEvent(new Event('change'))">
@@ -43,8 +43,7 @@
                   <h5 class="mb-0">Unit price: ${{ item.price }}</h5>
                 </div>
                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                  <h5 class="mb-0" *ngIf="total == 0">Total price: $ {{ item.sutotal_m * item.price }} </h5>
-                  <h5 class="mb-0" *ngIf="total > 0">Total price: $ <div id="total_{{item.products_id}}"></div> </h5>
+                  <h5 class="mb-0" >Total price: $<div id="total_{{item.products_id}}"></div> </h5>
                 </div>
                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                   <button mat-raised-button type="button" class="text-danger" (click)="openDialogConfirm('0ms', '0ms', item.products_id)"><fa-icon [icon]="faTrash"></fa-icon></button>
@@ -55,7 +54,17 @@
   
           <div class="card">
             <div class="card-body">
+              <div class="row d-flex justify-content-between align-items-center">
+                <div class="col-md-6 col-lg-2 col-xl-2 offset-lg-1">
+                  
+                </div>
+                <div class="col-md-2 col-lg-2 col-xl-4 offset-lg-1">
+                  <strong>Total to pay:</strong> ${{totalPayS}}
+                </div>
+              </div>
+              <br>
               <button type="button" class="btn btn-warning btn-block btn-lg" (click)="buy()">Proceed to Pay</button>
+              <button type="button" class="btn btn-info btn-block btn-lg" (click)="followBuy()">Follow Buy</button>
             </div>
           </div>
   

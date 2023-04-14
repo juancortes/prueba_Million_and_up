@@ -4,6 +4,8 @@ import { faPlus, faTrash, faMinus, faAngleDown } from '@fortawesome/free-solid-s
 import { TableService } from 'src/app/services/table.service';
 import { DialogConfirmComponent } from '../dialogs/dialog-confirm/dialog-confirm.component';
 import { DialogCantidadComponent } from '../dialogs/dialog-cantidad/dialog-cantidad.component';
+import { Router } from '@angular/router';
+import { formatNumber } from '@angular/common';
 
 @Component({
   selector: 'app-shopping-cards',
@@ -19,12 +21,15 @@ export class ShoppingCardsComponent implements OnInit {
   shoppingCards1:any[] = [];
   total:number = 0;
   count:number = 0;
+  totalPay:number = 0;
+  totalPayS:string = "";
 
   constructor(private tableService: TableService,
-    public dialog: MatDialog) {}
+              public dialog: MatDialog,
+              private router: Router) {}
 
   ngOnInit(): void {
-    this.refreshShoppingCards();
+    this.refreshShoppingCards(0);
   }
 
   openDialogConfirm(enterAnimationDuration: string, exitAnimationDuration: string, products_id: string): void {
@@ -36,15 +41,37 @@ export class ShoppingCardsComponent implements OnInit {
         dataKey: products_id
       }
     }).afterClosed().subscribe(() =>{
-      this.refreshShoppingCards();
+      this.refreshShoppingCards(0);
     });
   }
 
-  refreshShoppingCards()
+  refreshShoppingCards(val:number)
   {
-    this.tableService.getDataShoppingCards().subscribe((data:any) => {     
-      this.shoppingCards1 = data;
-    })
+    this.totalPay = 0;
+    this.tableService.getDataShoppingCards().subscribe((data:any) => {
+      console.log(val);
+      if(val == 0)
+      {
+        this.shoppingCards1 = data;
+      }
+      data.forEach((dato:any) => {
+        this.totalPay += dato.price * dato.sum;
+        console.log("total_"+dato.products_id);
+        setTimeout(() => {
+          let el = document.getElementById("total_"+dato.products_id);
+          if (el)
+          {
+            el.innerHTML = (dato.price * dato.sum) + "";
+            console.log((dato.price * dato.sum) + "");
+          }
+        }, 500);
+        
+      });
+    });
+    setTimeout(() => {
+      this.totalPayS = formatNumber(this.totalPay,'en-US');
+    }, 500);
+    
   }
 
   onCountChange(value:Event,products_id:string, price:number){
@@ -56,9 +83,10 @@ export class ShoppingCardsComponent implements OnInit {
         {
           this.dialog.open(DialogCantidadComponent, {
             data: {
+              dataKey: "insufficient amount"
             },
           });
-          this.refreshShoppingCards();
+          this.refreshShoppingCards(0);
         }
         else
         {
@@ -69,7 +97,7 @@ export class ShoppingCardsComponent implements OnInit {
     else
     {
       this.tableService.deleteShoppingCard(products_id).subscribe((data:any) => {
-        this.refreshShoppingCards();
+        this.refreshShoppingCards(0);
       })
     }
   }
@@ -77,12 +105,9 @@ export class ShoppingCardsComponent implements OnInit {
   addValue(value:string,products_id:string, price:number) {
     this.tableService.updateDataShoppingCards(value,products_id)
                       .subscribe((data:any) => {
-                      });
-      this.total = parseInt(value) * price;
-
-      const el = document.getElementById("total_"+products_id);
-      if (el)
-        el.innerHTML = this.total + "";
+                      });   
+    
+    this.refreshShoppingCards(1);
   }
 
   validateCount(value:number, products_id:string):number
@@ -95,7 +120,28 @@ export class ShoppingCardsComponent implements OnInit {
   }
 
   buy() {
-    this.tableService.saveSale().subscribe((data:any) => {
-    })
+    if(this.totalPay > 0)
+    {
+      this.tableService.saveSale().subscribe((data:any) => {
+        this.dialog.open(DialogCantidadComponent, {
+          data: {
+            dataKey: "Products successfully purchased"
+          },
+        });
+        this.refreshShoppingCards(0);
+      })
+    }
+    else
+    {
+      this.dialog.open(DialogCantidadComponent, {
+        data: {
+          dataKey: "There aren't products to buy"
+        },
+      });
+    }
+  }
+
+  followBuy() {
+    this.router.navigate(['dashboard/sales'])
   }
 }

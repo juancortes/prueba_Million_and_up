@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TableService } from 'src/app/services/table.service';
 import { DialogCantidadComponent } from '../dialogs/dialog-cantidad/dialog-cantidad.component';
 import { ShoppingCard } from 'src/app/model/shopping-card';
@@ -29,7 +29,8 @@ export class ProductsComponent implements OnInit {
   constructor(private tableService: TableService,
               private activatedRoute: ActivatedRoute,
               public dialog: MatDialog,
-              private fb:FormBuilder){
+              private fb:FormBuilder,
+              private router: Router){
     this.createForm();
   }
 
@@ -90,6 +91,7 @@ export class ProductsComponent implements OnInit {
         event.target.value = 0;
         this.dialog.open(DialogCantidadComponent, {
           data: {
+            dataKey: "insufficient amount"
           },
         });
       }
@@ -98,6 +100,8 @@ export class ProductsComponent implements OnInit {
       }
     }
   }
+
+  
 
   addShoppingCart() {
     let products_id:number = parseInt((this.activatedRoute.snapshot.paramMap.get("id")|| "")) ;
@@ -110,9 +114,15 @@ export class ProductsComponent implements OnInit {
                     .subscribe(data => {
                       this.calculateCount();
                       setTimeout(() => {
-                        this.refreshProducts()
+                        this.refreshProducts();
                       }, 100);
-                      
+                      this.dialog.open(DialogCantidadComponent, {
+                        data: {
+                          dataKey: "The product was add to shopping cart"
+                        },
+                      }).afterClosed().subscribe(() =>{
+                        this.router.navigate(['dashboard/sales'])
+                      });;
                     })
   }
 
